@@ -25,6 +25,24 @@ export const usersReducer = (state = initialState, action) => {
                 users: state.users.map(u => u.id === action.id ? {...u, name: action.name} : u)
             }
         }
+        case SET_NEW_USER_USERNAME: {
+            return {
+                ...state,
+                users: state.users.map(u => u.id === action.id ? {...u, username: action.username} : u)
+            }
+        }
+        case SET_NEW_USER_EMAIL: {
+            return {
+                ...state,
+                users: state.users.map(u => u.id === action.id ? {...u, email: action.email} : u)
+            }
+        }
+        case SET_NEW_USER_PHONE: {
+            return {
+                ...state,
+                users: state.users.map(u => u.id === action.id ? {...u, phone: action.phone} : u)
+            }
+        }
         default:
             return state
     }
@@ -32,6 +50,9 @@ export const usersReducer = (state = initialState, action) => {
 
 export const setUsers = (users) => ({type: SET_USERS, users})
 export const setNewUserName = (id, name) => ({type: SET_NEW_USER_NAME, id, name})
+export const setNewUserUserName = (id, username) => ({type: SET_NEW_USER_USERNAME, id, username})
+export const setNewUserEmail = (id, email) => ({type: SET_NEW_USER_EMAIL, id, email})
+export const setNewUserPhone = (id, phone) => ({type: SET_NEW_USER_PHONE, id, phone})
 export const toggleIsFetching = (value) => ({type: TOGGLE_IS_FETCHING, value})
 
 export const getUsers = () => async (dispatch) => {
@@ -51,9 +72,48 @@ export const updateUserName = (id, name) => async (dispatch) => {
     try {
         dispatch(toggleIsFetching(true))
 
-        const data = await usersAPI.updateUserName(id, name)
+        const nameData = await usersAPI.updateUserName(id, name)
 
-        dispatch(setNewUserName(data.data.id, data.data.name))
+        dispatch(setNewUserName(nameData.data.id, nameData.data.name))
+        dispatch(toggleIsFetching(false))
+    } catch (e) {
+        alert('something went wrong')
+    }
+}
+
+export const updateUserUsername = (id, username) => async (dispatch) => {
+    try {
+        dispatch(toggleIsFetching(true))
+
+        const usernameData = await usersAPI.updateUserUsername(id, username)
+
+        dispatch(setNewUserUserName(usernameData.data.id, usernameData.data.username))
+        dispatch(toggleIsFetching(false))
+    } catch (e) {
+        alert('something went wrong')
+    }
+}
+
+export const updateUserEmail = (id, email) => async (dispatch) => {
+    try {
+        dispatch(toggleIsFetching(true))
+
+        const emailData = await usersAPI.updateUserEmail(id, email)
+
+        dispatch(setNewUserEmail(emailData.data.id, emailData.data.email))
+        dispatch(toggleIsFetching(false))
+    } catch (e) {
+        alert('something went wrong')
+    }
+}
+
+export const updateUserPhone = (id, phone) => async (dispatch) => {
+    try {
+        dispatch(toggleIsFetching(true))
+
+        const phoneData = await usersAPI.updateUserPhone(id, phone)
+
+        dispatch(setNewUserPhone(phoneData.data.id, phoneData.data.phone))
         dispatch(toggleIsFetching(false))
     } catch (e) {
         alert('something went wrong')
@@ -62,4 +122,7 @@ export const updateUserName = (id, name) => async (dispatch) => {
 
 const SET_USERS = 'users/SET_USERS'
 const SET_NEW_USER_NAME = 'users/SET_NEW_USER_NAME'
+const SET_NEW_USER_USERNAME = 'users/SET_NEW_USER_USERNAME'
+const SET_NEW_USER_EMAIL = 'users/SET_NEW_USER_EMAIL'
+const SET_NEW_USER_PHONE = 'users/SET_NEW_USER_PHONE'
 const TOGGLE_IS_FETCHING = 'users/TOGGLE_IS_FETCHING'

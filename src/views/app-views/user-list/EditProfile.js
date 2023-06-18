@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Col, Drawer, Form, Input, message, Row} from 'antd';
+import {Button, Col, Drawer, Form, Input, Row} from 'antd';
 import {ROW_GUTTER} from 'constants/ThemeConstant';
 import Loading from "../../../components/shared-components/Loading";
 
@@ -30,6 +30,9 @@ export class EditProfile extends Component {
 
         const onFinish = values => {
             this.props.updateUserName(this.state.id, values.name)
+            this.props.updateUserUsername(this.state.id, values.username)
+            this.props.updateUserEmail(this.state.id, values.email)
+            this.props.updateUserPhone(this.state.id, values.phone)
         };
 
         const onFinishFailed = errorInfo => {

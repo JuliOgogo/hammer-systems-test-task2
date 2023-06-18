@@ -3,7 +3,13 @@ import {Button, Card, message, Table, Tooltip} from 'antd';
 import {DeleteOutlined} from '@ant-design/icons';
 import EditProfile from "./EditProfile";
 import {connect} from "react-redux";
-import {getUsers, updateUserName} from "../../../redux/thunks/usersReducer";
+import {
+    getUsers,
+    updateUserEmail,
+    updateUserName,
+    updateUserPhone,
+    updateUserUsername
+} from "../../../redux/thunks/usersReducer";
 import Loading from "../../../components/shared-components/Loading";
 
 export class UserList extends Component {
@@ -130,6 +136,9 @@ export class UserList extends Component {
                                      this.closeUserProfile()
                                  }}
                                  updateUserName={this.props.updateUserName}
+                                 updateUserUsername={this.props.updateUserUsername}
+                                 updateUserEmail={this.props.updateUserEmail}
+                                 updateUserPhone={this.props.updateUserPhone}
                                  isFetching={this.props.isFetching}/> : null}
 
             </Card>
@@ -144,4 +153,7 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {getUsers, updateUserName})(UserList)
+export default connect(mapStateToProps, {
+    getUsers, updateUserName, updateUserUsername, updateUserEmail,
+    updateUserPhone
+})(UserList)
