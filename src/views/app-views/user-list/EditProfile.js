@@ -8,14 +8,18 @@ export class EditProfile extends Component {
     state = {
         id: '1',
         name: 'Charlie Howard',
+        username: 'Charlie',
         email: 'charlie.howard@themenate.com',
+        phone: '12345',
     }
 
     componentDidMount() {
         this.setState({
             id: this.props.data.id,
             name: this.props.data.name,
+            username: this.props.data.username,
             email: this.props.data.email,
+            phone: this.props.data.phone,
         })
     }
 
@@ -32,11 +36,11 @@ export class EditProfile extends Component {
             console.log('Failed:', errorInfo);
         };
 
-        const {name, email} = this.state;
+        const {name, username, email, phone} = this.state;
 
         return (
             <Drawer
-                width={800}
+                width={600}
                 placement="right"
                 onClose={close}
                 closable={false}
@@ -52,7 +56,9 @@ export class EditProfile extends Component {
                         initialValues={
                             {
                                 'name': name,
+                                'username': username,
                                 'email': email,
+                                'phone': phone,
                             }
                         }
                         onFinish={onFinish}
@@ -77,12 +83,39 @@ export class EditProfile extends Component {
                                     </Col>
                                     <Col xs={24} sm={24} md={12}>
                                         <Form.Item
+                                            label="Username"
+                                            name="username"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your username!',
+                                                },
+                                            ]}
+                                        >
+                                            <Input/>
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={12}>
+                                        <Form.Item
                                             label="Email"
                                             name="email"
                                             rules={[{
                                                 required: true,
                                                 type: 'email',
                                                 message: 'Please enter a valid email!'
+                                            }]}
+                                        >
+                                            <Input/>
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={12}>
+                                        <Form.Item
+                                            label="Phone"
+                                            name="phone"
+                                            rules={[{
+                                                required: true,
+                                                type: 'phone',
+                                                message: 'Please enter a valid phone!'
                                             }]}
                                         >
                                             <Input/>
