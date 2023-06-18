@@ -9,5 +9,8 @@ export const usersAPI = {
         return instance.get('users').then(res => {
             return res.data
         })
+    },
+    updateUserName(id, name) {
+        return instance.put(`users/${id}`, {name})
     }
 }

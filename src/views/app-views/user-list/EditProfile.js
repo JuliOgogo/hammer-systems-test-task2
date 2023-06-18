@@ -1,16 +1,19 @@
 import React, {Component} from 'react';
 import {Button, Col, Drawer, Form, Input, message, Row} from 'antd';
 import {ROW_GUTTER} from 'constants/ThemeConstant';
+import Loading from "../../../components/shared-components/Loading";
 
 export class EditProfile extends Component {
 
     state = {
+        id: '1',
         name: 'Charlie Howard',
         email: 'charlie.howard@themenate.com',
     }
 
     componentDidMount() {
         this.setState({
+            id: this.props.data.id,
             name: this.props.data.name,
             email: this.props.data.email,
         })
@@ -22,15 +25,7 @@ export class EditProfile extends Component {
         console.log(this.props.data)
 
         const onFinish = values => {
-            const key = 'updatable';
-            message.loading({content: 'Updating...', key});
-            setTimeout(() => {
-                this.setState({
-                    name: values.name,
-                    email: values.email,
-                })
-                message.success({content: 'Done!', key, duration: 2});
-            }, 1000);
+            this.props.updateUserName(this.state.id, values.name)
         };
 
         const onFinishFailed = errorInfo => {
@@ -47,6 +42,9 @@ export class EditProfile extends Component {
                 closable={false}
                 visible={visible}
             >
+
+                {this.props.isFetching ? <Loading/> : null}
+
                 <div className="mt-4">
                     <Form
                         name="basicInformation"
@@ -91,7 +89,7 @@ export class EditProfile extends Component {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                <Button type="primary" htmlType="submit">
+                                <Button type="primary" htmlType="submit" disabled={this.props.isFetching}>
                                     Save Change
                                 </Button>
                             </Col>

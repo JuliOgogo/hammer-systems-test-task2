@@ -3,7 +3,7 @@ import {Button, Card, message, Table, Tooltip} from 'antd';
 import {DeleteOutlined} from '@ant-design/icons';
 import EditProfile from "./EditProfile";
 import {connect} from "react-redux";
-import {getUsers} from "../../../redux/thunks/usersReducer";
+import {getUsers, updateUserName} from "../../../redux/thunks/usersReducer";
 import Loading from "../../../components/shared-components/Loading";
 
 export class UserList extends Component {
@@ -76,23 +76,23 @@ export class UserList extends Component {
                 },
             },
             {
+                title: 'Email',
+                dataIndex: 'email',
+                sorter: {
+                    compare: (a, b) => {
+                        a = a.email.toLowerCase();
+                        b = b.email.toLowerCase();
+                        return a > b ? -1 : b > a ? 1 : 0;
+                    },
+                },
+            },
+            {
                 title: 'Phone',
                 dataIndex: 'phone',
                 sorter: {
                     compare: (a, b) => {
                         a = a.phone.toLowerCase();
                         b = b.phone.toLowerCase();
-                        return a > b ? -1 : b > a ? 1 : 0;
-                    },
-                },
-            },
-            {
-                title: 'Website',
-                dataIndex: 'website',
-                sorter: {
-                    compare: (a, b) => {
-                        a = a.website.toLowerCase();
-                        b = b.website.toLowerCase();
                         return a > b ? -1 : b > a ? 1 : 0;
                     },
                 },
@@ -124,9 +124,13 @@ export class UserList extends Component {
                 <Table columns={tableColumns} dataSource={users} rowKey='id'/>
 
                 {this.state.userProfileVisible ?
-                    <EditProfile data={selectedUser} visible={userProfileVisible} close={() => {
-                        this.closeUserProfile()
-                    }}/> : null}
+                    <EditProfile data={selectedUser}
+                                 visible={userProfileVisible}
+                                 close={() => {
+                                     this.closeUserProfile()
+                                 }}
+                                 updateUserName={this.props.updateUserName}
+                                 isFetching={this.props.isFetching}/> : null}
 
             </Card>
         )
@@ -140,4 +144,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {getUsers})(UserList)
+export default connect(mapStateToProps, {getUsers, updateUserName})(UserList)
