@@ -68,51 +68,18 @@ export const getUsers = () => async (dispatch) => {
     }
 }
 
-export const updateUserName = (id, name) => async (dispatch) => {
+export const updateUser = (id, name, username, email, phone) => async (dispatch) => {
     try {
         dispatch(toggleIsFetching(true))
 
         const nameData = await usersAPI.updateUserName(id, name)
-
-        dispatch(setNewUserName(nameData.data.id, nameData.data.name))
-        dispatch(toggleIsFetching(false))
-    } catch (e) {
-        alert('something went wrong')
-    }
-}
-
-export const updateUserUsername = (id, username) => async (dispatch) => {
-    try {
-        dispatch(toggleIsFetching(true))
-
         const usernameData = await usersAPI.updateUserUsername(id, username)
-
-        dispatch(setNewUserUserName(usernameData.data.id, usernameData.data.username))
-        dispatch(toggleIsFetching(false))
-    } catch (e) {
-        alert('something went wrong')
-    }
-}
-
-export const updateUserEmail = (id, email) => async (dispatch) => {
-    try {
-        dispatch(toggleIsFetching(true))
-
         const emailData = await usersAPI.updateUserEmail(id, email)
-
-        dispatch(setNewUserEmail(emailData.data.id, emailData.data.email))
-        dispatch(toggleIsFetching(false))
-    } catch (e) {
-        alert('something went wrong')
-    }
-}
-
-export const updateUserPhone = (id, phone) => async (dispatch) => {
-    try {
-        dispatch(toggleIsFetching(true))
-
         const phoneData = await usersAPI.updateUserPhone(id, phone)
 
+        dispatch(setNewUserName(nameData.data.id, nameData.data.name))
+        dispatch(setNewUserUserName(usernameData.data.id, usernameData.data.username))
+        dispatch(setNewUserEmail(emailData.data.id, emailData.data.email))
         dispatch(setNewUserPhone(phoneData.data.id, phoneData.data.phone))
         dispatch(toggleIsFetching(false))
     } catch (e) {

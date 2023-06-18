@@ -3,13 +3,7 @@ import {Button, Card, message, Table, Tooltip} from 'antd';
 import {DeleteOutlined} from '@ant-design/icons';
 import EditProfile from "./EditProfile";
 import {connect} from "react-redux";
-import {
-    getUsers,
-    updateUserEmail,
-    updateUserName,
-    updateUserPhone,
-    updateUserUsername
-} from "../../../redux/thunks/usersReducer";
+import {getUsers, updateUser} from "../../../redux/thunks/usersReducer";
 import Loading from "../../../components/shared-components/Loading";
 
 export class UserList extends Component {
@@ -125,9 +119,9 @@ export class UserList extends Component {
         return (
             <Card bodyStyle={{'padding': '0px'}}>
 
-                {this.props.isFetching ? <Loading/> : null}
-
                 <Table columns={tableColumns} dataSource={users} rowKey='id'/>
+
+                {this.props.isFetching ? <Loading/> : null}
 
                 {this.state.userProfileVisible ?
                     <EditProfile data={selectedUser}
@@ -135,10 +129,7 @@ export class UserList extends Component {
                                  close={() => {
                                      this.closeUserProfile()
                                  }}
-                                 updateUserName={this.props.updateUserName}
-                                 updateUserUsername={this.props.updateUserUsername}
-                                 updateUserEmail={this.props.updateUserEmail}
-                                 updateUserPhone={this.props.updateUserPhone}
+                                 updateUser={this.props.updateUser}
                                  isFetching={this.props.isFetching}/> : null}
 
             </Card>
@@ -154,6 +145,5 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, {
-    getUsers, updateUserName, updateUserUsername, updateUserEmail,
-    updateUserPhone
+    getUsers, updateUser
 })(UserList)

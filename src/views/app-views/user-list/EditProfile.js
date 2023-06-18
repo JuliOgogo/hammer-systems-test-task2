@@ -29,10 +29,7 @@ export class EditProfile extends Component {
         console.log(this.props.data)
 
         const onFinish = values => {
-            this.props.updateUserName(this.state.id, values.name)
-            this.props.updateUserUsername(this.state.id, values.username)
-            this.props.updateUserEmail(this.state.id, values.email)
-            this.props.updateUserPhone(this.state.id, values.phone)
+            this.props.updateUser(this.state.id, values.name, values.username, values.email, values.phone)
         };
 
         const onFinishFailed = errorInfo => {
@@ -49,9 +46,6 @@ export class EditProfile extends Component {
                 closable={false}
                 visible={visible}
             >
-
-                {this.props.isFetching ? <Loading/> : null}
-
                 <div className="mt-4">
                     <Form
                         name="basicInformation"
@@ -128,6 +122,9 @@ export class EditProfile extends Component {
                                 <Button type="primary" htmlType="submit" disabled={this.props.isFetching}>
                                     Save Change
                                 </Button>
+
+                                {this.props.isFetching ? <Loading/> : null}
+
                             </Col>
                         </Row>
                     </Form>
