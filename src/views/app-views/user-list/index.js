@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Button, Card, message, Table, Tooltip} from 'antd';
 import {DeleteOutlined} from '@ant-design/icons';
-import EditProfile from "../setting/EditProfile";
+import EditProfile from "./EditProfile";
 import {connect} from "react-redux";
 import {getUsers} from "../../../redux/thunks/usersReducer";
 import Loading from "../../../components/shared-components/Loading";
